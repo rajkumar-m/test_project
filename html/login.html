@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<link rel="stylesheet" href="../css/custom-core.css">
+<head>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height, initial-scale=1">
+</head>
+<body class="app-container">
+<script>
+
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+
+    if (response.status === 'connected') {
+      // goToAppHome();
+
+    } else if (response.status === 'not_authorized') {
+    	showLogin();
+
+    } else {
+    	showLogin();
+    }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1259156297444611',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use version 2.2
+  });
+
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  
+  function onLogoutClick(){
+    
+	  FB.logout(function(response) {
+      // Person is now logged out
+  	  });
+	  
+  }
+  function showLogin(){
+	  document.getElementById('login_div').style.display='';
+	//  document.getElementById('app_div').style.display='none';	  
+  }
+  function showApplication(){
+	  document.getElementById('login_div').style.display='none';
+	//  document.getElementById('app_div').style.display='';
+  }
+  function goToForgotPassword(){
+	 // alert ('Forgot password -Implementation Pending');
+	  goToAppHome();
+  }
+  function goToSignup(){
+	  document.location.href = "./register.html";
+  }
+  function goToAppHome(){
+	  document.location.href = "./homepage.html";
+  }
+ 
+</script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<div id="login_div" align="center">
+    <table width="220px;" height="40px;">
+    <tr height="50px"></tr>
+    <tr>
+    <td style="color:#FFFF99;font-size:18px;width:130px;">Sign In</td>
+    </tr>
+    <tr height="20px"></tr>
+    <tr><td><input style="width:200px;height:25px;"  type="text" name="email_id" placeholder="Email"/></td></tr>
+    <tr><td><input style="width:200px;height:25px;"  type="text" name="pass_id" placeholder="Password"/></td></tr>
+    </table>
+    
+    
+    
+    <table width="220px;" height="40px;">
+    <tr>
+    <td style="color:white;font-size:13px;width:130px;">Stay logged in</td>
+    <td style="color:white;font-size:13px;width:70px;text-align:right">
+        <label class="switch">
+      <input type="checkbox" class="switch-input">
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+    </label>
+    </td>
+    </tr>
+    </table>
+    
+    <br>
+    <a href="javascript:goToAppHome()" style="width:170px;height:35px;font-size:15px;" class="button button-blue">Login</a>
+    <table width="220px;" height="40px;">
+    <tr height="10px"></tr>
+    <tr>
+    <td style="width:110px;">
+     <a href="javascript:goToForgotPassword()" style="color:#999999;font-size:12px;font-size:12px;"> Forgot Password? </a>
+     </td>
+     <td style="width:110px;text-align:right;">
+     	<a href="javascript:goToSignup()" style="color:#999999;font-size:12px;font-size:12px;"> Sign Up </a>
+     </td>
+    </tr>
+    <tr height="5px"></tr>
+    </table>
+    <hr width="220px;">
+    <p style="color:white;font-size:12px;"> OR <p>
+    <fb:login-button size="large" autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">  Login with Facebook
+    </fb:login-button>
+</div>
+
+</body>
+</html>
+
